@@ -1,8 +1,6 @@
 import logging
-
 from aiogram import Bot, Dispatcher
 from django.apps import AppConfig
-
 from core import config
 
 logger = logging.getLogger(__name__)
@@ -28,11 +26,8 @@ class BotConfig(AppConfig):
             BotConfig.dp.message.middleware(TranslationMiddleware())
             BotConfig.dp.callback_query.middleware(TranslationMiddleware())
 
-            # Register handlers
-            from bot.handlers import start, menu, backs, order
-            BotConfig.dp.include_router(start.router)
-            BotConfig.dp.include_router(menu.router)
-            BotConfig.dp.include_router(backs.router)
-            BotConfig.dp.include_router(order.router)
+            # Register routers
+            from bot.handlers.start import router
+            BotConfig.dp.include_router(router)
 
-            logger.info("Bot initialized successfully with i18n support")
+            logger.info("Bot initialized successfully!")
